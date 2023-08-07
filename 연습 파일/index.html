@@ -1,0 +1,953 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<title>여러개 마커 표시하기</title>
+    
+</head>
+<body>
+<div id="map" style="width:100%;height:350px;"></div>
+
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2a6fa26b5611310b642937947b2f84aa"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+    mapOption = { 
+        center: new kakao.maps.LatLng(36.88724061, 126.6247065), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+ 
+// 마커를 표시할 위치와 title 객체 배열입니다 
+var positions = [
+{
+	title: '<div style="padding:5px;"> 사)충남지체장애인협회 당진시지회</div>',
+	lating: new kakao.maps.LatLng( 36.88724061 , 126.6247065 )
+},
+
+{
+	title: '<div style="padding:5px;"> 완도군 개인택시 지부(위탁)</div>',
+	lating: new kakao.maps.LatLng( 34.318879 , 126.7445341 )
+},
+
+{
+	title: '<div style="padding:5px;"> 금산군 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.11216659 , 127.4815168 )
+},
+
+{
+	title: '<div style="padding:5px;"> 진안군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.790572 , 127.4251603464 )
+},
+
+{
+	title: '<div style="padding:5px;"> 사단법인한국시각장애인연합회영월지회</div>',
+	lating: new kakao.maps.LatLng( 37.185347 , 128.467917 )
+},
+
+{
+	title: '<div style="padding:5px;"> 예천군장애인이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.649653 , 128.441283 )
+},
+
+{
+	title: '<div style="padding:5px;"> 교통약자 이동지원 센터 행복콜</div>',
+	lating: new kakao.maps.LatLng( 36.5871278 , 128.1940527 )
+},
+
+{
+	title: '<div style="padding:5px;"> 함안군교통약자콜택시(경남지체장애인연합회 함안군지회)</div>',
+	lating: new kakao.maps.LatLng( 35.27505859 , 128.4105797 )
+},
+
+{
+	title: '<div style="padding:5px;"> 의정부시시설관리공단 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.75793498 , 127.0316068 )
+},
+
+{
+	title: '<div style="padding:5px;"> 광주광역시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.21828687 , 126.8926489 )
+},
+
+{
+	title: '<div style="padding:5px;"> 시흥시 교통약자이동지원센터(희망네바퀴)</div>',
+	lating: new kakao.maps.LatLng( 37.36300325 , 126.8065192 )
+},
+
+{
+	title: '<div style="padding:5px;"> 김포시 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.65330173 , 126.6835109 )
+},
+
+{
+	title: '<div style="padding:5px;"> 전남지체장애인협회담양군지회</div>',
+	lating: new kakao.maps.LatLng( 35.31476994 , 126.9766124 )
+},
+
+{
+	title: '<div style="padding:5px;"> 용인시 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.24963097 , 127.165158 )
+},
+
+{
+	title: '<div style="padding:5px;"> 옥천군 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.30692008 , 127.5642376 )
+},
+
+{
+	title: '<div style="padding:5px;"> 음성군 특별교통수단 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.99372848 , 127.6042954 )
+},
+
+{
+	title: '<div style="padding:5px;"> 제천시 특별교통수단 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.171529 , 128.242342 )
+},
+
+{
+	title: '<div style="padding:5px;"> 사)강원도시각장애인연합회 철원군지회</div>',
+	lating: new kakao.maps.LatLng( 38.20394617 , 127.2201917 )
+},
+
+{
+	title: '<div style="padding:5px;"> 의왕시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.30274385 , 126.959074 )
+},
+
+{
+	title: '<div style="padding:5px;"> 대전교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.3173370007 , 127.4280138234 )
+},
+
+{
+	title: '<div style="padding:5px;"> 영동군 지체장애인협회</div>',
+	lating: new kakao.maps.LatLng( 36.1691321299 , 127.7758461604 )
+},
+
+{
+	title: '<div style="padding:5px;"> 영동군 생활이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.1691321299 , 127.7758461604 )
+},
+
+{
+	title: '<div style="padding:5px;"> 전남지체장애인협회 화순군지회</div>',
+	lating: new kakao.maps.LatLng( 35.0677473 , 126.991519 )
+},
+
+{
+	title: '<div style="padding:5px;"> (사)한국시각장애인연합회 양양군지회</div>',
+	lating: new kakao.maps.LatLng( 38.07784423 , 128.6274852 )
+},
+
+{
+	title: '<div style="padding:5px;"> (사)강원도지체장애인협회 양양군지회</div>',
+	lating: new kakao.maps.LatLng( 38.07784423 , 128.6274852 )
+},
+
+{
+	title: '<div style="padding:5px;"> 보은군장애인생활이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.4886825 , 127.7234966 )
+},
+
+{
+	title: '<div style="padding:5px;"> 무주군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.00671051 , 127.662714 )
+},
+
+{
+	title: '<div style="padding:5px;"> 전남지체장애인협회 영암군지회</div>',
+	lating: new kakao.maps.LatLng( 34.79496124 , 126.6969605 )
+},
+
+{
+	title: '<div style="padding:5px;"> 울릉택시협동조합</div>',
+	lating: new kakao.maps.LatLng( 37.49693638 , 130.8971107 )
+},
+
+{
+	title: '<div style="padding:5px;"> 경상북도특별교통수단상주시부름콜센터</div>',
+	lating: new kakao.maps.LatLng( 36.39972419 , 128.1513513 )
+},
+
+{
+	title: '<div style="padding:5px;"> 양산시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.35051203 , 129.0350935 )
+},
+
+{
+	title: '<div style="padding:5px;"> 수원시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.23777723 , 127.018347 )
+},
+
+{
+	title: '<div style="padding:5px;"> 사천시 특별교통수단</div>',
+	lating: new kakao.maps.LatLng( 34.93131695 , 128.0820506 )
+},
+
+{
+	title: '<div style="padding:5px;"> 사천시 특별교통수단</div>',
+	lating: new kakao.maps.LatLng( 35.08619443 , 128.1000627 )
+},
+
+{
+	title: '<div style="padding:5px;"> 가평군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.82631492 , 127.5078619 )
+},
+
+{
+	title: '<div style="padding:5px;"> 양평군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.49776189 , 127.4871469 )
+},
+
+{
+	title: '<div style="padding:5px;"> 정읍시 행복콜택시</div>',
+	lating: new kakao.maps.LatLng( 35.58500364 , 126.8606847 )
+},
+
+{
+	title: '<div style="padding:5px;"> 남양주시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.65539978 , 127.1792621 )
+},
+
+{
+	title: '<div style="padding:5px;"> 김천시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.13177813 , 128.137665 )
+},
+
+{
+	title: '<div style="padding:5px;"> 파주시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.7961277 , 126.7901986 )
+},
+
+{
+	title: '<div style="padding:5px;"> 강원도교통약자광역이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.88007265 , 127.7279085 )
+},
+
+{
+	title: '<div style="padding:5px;"> 교통편의관리소</div>',
+	lating: new kakao.maps.LatLng( 35.234007131 , 128.6647353695 )
+},
+
+{
+	title: '<div style="padding:5px;"> 천안시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.7979991 , 127.1431034 )
+},
+
+{
+	title: '<div style="padding:5px;"> 공주시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.49366156 , 127.1356957 )
+},
+
+{
+	title: '<div style="padding:5px;"> 보령시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.34544473 , 126.6020154 )
+},
+
+{
+	title: '<div style="padding:5px;"> 아산시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.78898932 , 126.9978278 )
+},
+
+{
+	title: '<div style="padding:5px;"> 서산시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.74512191 , 126.4852735 )
+},
+
+{
+	title: '<div style="padding:5px;"> 논산시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.20032028 , 127.0782185 )
+},
+
+{
+	title: '<div style="padding:5px;"> 순창군 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.37765073 , 127.1468543 )
+},
+
+{
+	title: '<div style="padding:5px;"> 당진시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.88724412 , 126.6247053 )
+},
+
+{
+	title: '<div style="padding:5px;"> 금산군 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.10193265 , 127.5067571 )
+},
+
+{
+	title: '<div style="padding:5px;"> 부여군 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.27331322 , 126.8712187 )
+},
+
+{
+	title: '<div style="padding:5px;"> 서천군 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.07485734 , 126.6914297 )
+},
+
+{
+	title: '<div style="padding:5px;"> 청양군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.44939025 , 126.786522 )
+},
+
+{
+	title: '<div style="padding:5px;"> 홍성군 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.59770889 , 126.6558164 )
+},
+
+{
+	title: '<div style="padding:5px;"> 예산군 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.69471087 , 126.8353696 )
+},
+
+{
+	title: '<div style="padding:5px;"> 태안군 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.74591186 , 126.3018915 )
+},
+
+{
+	title: '<div style="padding:5px;"> (사)전남장애인총연합회 강진군지부</div>',
+	lating: new kakao.maps.LatLng( 34.64034375 , 126.7741157 )
+},
+
+{
+	title: '<div style="padding:5px;"> 하남시교통약자이동지원센터-나눔콜</div>',
+	lating: new kakao.maps.LatLng( 37.538986 , 127.230067 )
+},
+
+{
+	title: '<div style="padding:5px;"> 해남군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 34.57095368 , 126.605043 )
+},
+
+{
+	title: '<div style="padding:5px;"> 세종누리콜</div>',
+	lating: new kakao.maps.LatLng( 36.5941098997 , 127.2841210513 )
+},
+
+{
+	title: '<div style="padding:5px;"> 부산광역시 교통약자이동지원센터(부산시설공단)</div>',
+	lating: new kakao.maps.LatLng( 35.19784977 , 129.0800058 )
+},
+
+{
+	title: '<div style="padding:5px;"> 보령시도로교통과</div>',
+	lating: new kakao.maps.LatLng( 36.34508656 , 126.6010488 )
+},
+
+{
+	title: '<div style="padding:5px;"> 화성시 교통약자이동지원센터(화성나래)</div>',
+	lating: new kakao.maps.LatLng( 37.13752921 , 126.9242565 )
+},
+
+{
+	title: '<div style="padding:5px;"> 동해시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.49705665 , 129.1266705 )
+},
+
+{
+	title: '<div style="padding:5px;"> 영천시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.957177 , 128.932791 )
+},
+
+{
+	title: '<div style="padding:5px;"> 칠곡군 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.0066688835 , 128.4082377364 )
+},
+
+{
+	title: '<div style="padding:5px;"> 의성군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.3594974 , 128.6801537 )
+},
+
+{
+	title: '<div style="padding:5px;"> 이천시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.27462146 , 127.4442088 )
+},
+
+{
+	title: '<div style="padding:5px;"> 한국교통장애인협회 청도군지회</div>',
+	lating: new kakao.maps.LatLng( 35.67096686 , 128.7394066 )
+},
+
+{
+	title: '<div style="padding:5px;"> 목포시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 34.80554093 , 126.4042502 )
+},
+
+{
+	title: '<div style="padding:5px;"> 진주시교통약자특별교통수단(일진교통)</div>',
+	lating: new kakao.maps.LatLng( 35.1642235 , 128.0651561 )
+},
+
+{
+	title: '<div style="padding:5px;"> 진주시교통약자특별교통수단(동진택시)</div>',
+	lating: new kakao.maps.LatLng( 35.18727147 , 128.1119228 )
+},
+
+{
+	title: '<div style="padding:5px;"> 착한수레</div>',
+	lating: new kakao.maps.LatLng( 37.40629131 , 126.9487366 )
+},
+
+{
+	title: '<div style="padding:5px;"> 경주시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.8444091402 , 129.201709 )
+},
+
+{
+	title: '<div style="padding:5px;"> 안산시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.31947602 , 126.8164939 )
+},
+
+{
+	title: '<div style="padding:5px;"> (사)한국지체장애인협회 부여군지회</div>',
+	lating: new kakao.maps.LatLng( 36.27331214 , 126.8712172 )
+},
+
+{
+	title: '<div style="padding:5px;"> 충주시특별교통수단이동지원센터(출근)</div>',
+	lating: new kakao.maps.LatLng( 37.00169614 , 127.9180329 )
+},
+
+{
+	title: '<div style="padding:5px;"> 충주시특별교통수단이동지원센터(퇴근)</div>',
+	lating: new kakao.maps.LatLng( 37.00169614 , 127.9180329 )
+},
+
+{
+	title: '<div style="padding:5px;"> 구리시 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.61313887 , 127.1409183 )
+},
+
+{
+	title: '<div style="padding:5px;"> 장흥군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 34.68686476 , 126.9096495 )
+},
+
+{
+	title: '<div style="padding:5px;"> 고흥군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 34.613793569 , 127.2879524306 )
+},
+
+{
+	title: '<div style="padding:5px;"> 봄내콜이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.914628 , 127.748277 )
+},
+
+{
+	title: '<div style="padding:5px;"> 구례군 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.2166161 , 127.4668741 )
+},
+
+{
+	title: '<div style="padding:5px;"> 논산시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.2003202 , 127.078218 )
+},
+
+{
+	title: '<div style="padding:5px;"> 여주시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.29737726 , 127.6358905 )
+},
+
+{
+	title: '<div style="padding:5px;"> 성남시내버스(주) 택시사업부</div>',
+	lating: new kakao.maps.LatLng( 37.44407384 , 127.1785358 )
+},
+
+{
+	title: '<div style="padding:5px;"> 광주희망콜</div>',
+	lating: new kakao.maps.LatLng( 37.40998092 , 127.2653231 )
+},
+
+{
+	title: '<div style="padding:5px;"> 경북광역이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.12375 , 128.332153 )
+},
+
+{
+	title: '<div style="padding:5px;"> (사)지체장애인협회 의령군지회</div>',
+	lating: new kakao.maps.LatLng( 35.315489 , 128.255951 )
+},
+
+{
+	title: '<div style="padding:5px;"> 신안군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 34.7844599549 , 126.3849637813 )
+},
+
+{
+	title: '<div style="padding:5px;"> 광명시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.45727525 , 126.8723345 )
+},
+
+{
+	title: '<div style="padding:5px;"> 고양시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.64247907 , 126.7953758 )
+},
+
+{
+	title: '<div style="padding:5px;"> 장수군 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.65392867 , 127.517936 )
+},
+
+{
+	title: '<div style="padding:5px;"> 영광군 특별교통수단(장애인콜택시)</div>',
+	lating: new kakao.maps.LatLng( 35.26952915 , 126.5090179 )
+},
+
+{
+	title: '<div style="padding:5px;"> 여수시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 34.7770136 , 127.6554801 )
+},
+
+{
+	title: '<div style="padding:5px;"> 한국교통장애인협회 영덕군지회</div>',
+	lating: new kakao.maps.LatLng( 36.4104850029 , 129.367214 )
+},
+
+{
+	title: '<div style="padding:5px;"> 청주시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.63785612 , 127.4723448 )
+},
+
+{
+	title: '<div style="padding:5px;"> 장애인생활이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.10044872 , 127.4985088 )
+},
+
+{
+	title: '<div style="padding:5px;"> 남원시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.40341851 , 127.377408 )
+},
+
+{
+	title: '<div style="padding:5px;"> 한국교통장애인협회영주시지회</div>',
+	lating: new kakao.maps.LatLng( 36.8270932 , 128.6235929 )
+},
+
+{
+	title: '<div style="padding:5px;"> 경상남도특별교통수단콜센터</div>',
+	lating: new kakao.maps.LatLng( 35.2396723 , 128.6475949 )
+},
+
+{
+	title: '<div style="padding:5px;"> 양구군 장애인생활이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 38.1087485207 , 127.9864048749 )
+},
+
+{
+	title: '<div style="padding:5px;"> 인천 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.4365452 , 126.6864606 )
+},
+
+{
+	title: '<div style="padding:5px;"> 군산시 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.97302347 , 126.684383 )
+},
+
+{
+	title: '<div style="padding:5px;"> 창원시설공단 교통편의관리소</div>',
+	lating: new kakao.maps.LatLng( 35.234007 , 128.664735 )
+},
+
+{
+	title: '<div style="padding:5px;"> 강원도지체장애인협회 고성군지회</div>',
+	lating: new kakao.maps.LatLng( 38.37818193 , 128.4988401 )
+},
+
+{
+	title: '<div style="padding:5px;"> 강릉시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.76923243 , 128.9298548 )
+},
+
+{
+	title: '<div style="padding:5px;"> 예산군 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.6947127553 , 126.8353690422 )
+},
+
+{
+	title: '<div style="padding:5px;"> 임실군장애인연합회 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.61026512 , 127.283295 )
+},
+
+{
+	title: '<div style="padding:5px;"> 고창군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.43762073 , 126.7129638 )
+},
+
+{
+	title: '<div style="padding:5px;"> 사)한국지체장애인협회 함평군지회</div>',
+	lating: new kakao.maps.LatLng( 35.07582913 , 126.512894 )
+},
+
+{
+	title: '<div style="padding:5px;"> 강원도 교통약자 광역이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.8800729197 , 127.7279078203 )
+},
+
+{
+	title: '<div style="padding:5px;"> 대구시달서구장애인이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.83004237 , 128.528337 )
+},
+
+{
+	title: '<div style="padding:5px;"> 경북지체장애인협회 봉화군지회</div>',
+	lating: new kakao.maps.LatLng( 36.89365762 , 128.737331 )
+},
+
+{
+	title: '<div style="padding:5px;"> 진천군 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.8610976 , 127.439492 )
+},
+
+{
+	title: '<div style="padding:5px;"> 장성군교통약자이동편의증진센터(전남지체장애인협회 장성군지회)</div>',
+	lating: new kakao.maps.LatLng( 35.30199904 , 126.7813166 )
+},
+
+{
+	title: '<div style="padding:5px;"> 연천군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 38.02902948 , 127.0661008 )
+},
+
+{
+	title: '<div style="padding:5px;"> 정선군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.38230943 , 128.673439 )
+},
+
+{
+	title: '<div style="padding:5px;"> 경남지체장애인협회합천군지회</div>',
+	lating: new kakao.maps.LatLng( 35.56841416 , 128.1569121 )
+},
+
+{
+	title: '<div style="padding:5px;"> 산청군 교통약자 콜택시</div>',
+	lating: new kakao.maps.LatLng( 35.413607 , 127.886574 )
+},
+
+{
+	title: '<div style="padding:5px;"> 거창군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.68667584 , 127.9095332 )
+},
+
+{
+	title: '<div style="padding:5px;"> (사)강원도지체장애인협회 평창군지회</div>',
+	lating: new kakao.maps.LatLng( 37.65292724 , 128.5711924 )
+},
+
+{
+	title: '<div style="padding:5px;"> 청송군 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.43511571 , 129.0614924 )
+},
+
+{
+	title: '<div style="padding:5px;"> 교통약자 특별교통수단</div>',
+	lating: new kakao.maps.LatLng( 34.84996554 , 128.4293738 )
+},
+
+{
+	title: '<div style="padding:5px;"> 이지콜센터</div>',
+	lating: new kakao.maps.LatLng( 35.84075454 , 127.127127 )
+},
+
+{
+	title: '<div style="padding:5px;"> 나주시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 34.98798165 , 126.7286244 )
+},
+
+{
+	title: '<div style="padding:5px;"> 청양군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.44939025 , 126.786522 )
+},
+
+{
+	title: '<div style="padding:5px;"> (사)한국교통장애인협회 울진군지회</div>',
+	lating: new kakao.maps.LatLng( 36.99137861 , 129.405693 )
+},
+
+{
+	title: '<div style="padding:5px;"> 익산시장애인콜택시콜센터</div>',
+	lating: new kakao.maps.LatLng( 35.919194 , 126.9188748 )
+},
+
+{
+	title: '<div style="padding:5px;"> 평택시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.0386047913 , 127.1006932 )
+},
+
+{
+	title: '<div style="padding:5px;"> 광양시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 34.9754338 , 127.5782601 )
+},
+
+{
+	title: '<div style="padding:5px;"> 용인시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.2496309738 , 127.16515804 )
+},
+
+{
+	title: '<div style="padding:5px;"> 전라남도 지체장애인협회 곡성군지회</div>',
+	lating: new kakao.maps.LatLng( 35.28043576 , 127.2962815 )
+},
+
+{
+	title: '<div style="padding:5px;"> 남해군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 34.84954976 , 127.9088757 )
+},
+
+{
+	title: '<div style="padding:5px;"> 경기도안성시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.01319895 , 127.3278403 )
+},
+
+{
+	title: '<div style="padding:5px;"> 강남세움복지관</div>',
+	lating: new kakao.maps.LatLng( 37.48698084 , 127.106927 )
+},
+
+{
+	title: '<div style="padding:5px;"> 부천시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.51275697 , 126.7639108 )
+},
+
+{
+	title: '<div style="padding:5px;"> 의왕시 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.30274385 , 126.959074 )
+},
+
+{
+	title: '<div style="padding:5px;"> 양주시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.81249951 , 126.9723084 )
+},
+
+{
+	title: '<div style="padding:5px;"> 무안군교통약지이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 34.99186126 , 126.478132 )
+},
+
+{
+	title: '<div style="padding:5px;"> 영양군 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.66192436 , 129.1186857 )
+},
+
+{
+	title: '<div style="padding:5px;"> 속초시 사회복지협의회 특별교통수단 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 38.2015051885 , 128.5894937959 )
+},
+
+{
+	title: '<div style="padding:5px;"> 경북광역이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.81721215 , 128.7682761 )
+},
+
+{
+	title: '<div style="padding:5px;"> 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 35.7233599 , 126.7317745 )
+},
+
+{
+	title: '<div style="padding:5px;"> 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.89623177 , 127.211078 )
+},
+
+{
+	title: '<div style="padding:5px;"> 제주특별자치도 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 33.47976965 , 126.4736511 )
+},
+
+{
+	title: '<div style="padding:5px;"> 오산시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.156843 , 127.0726163 )
+},
+
+{
+	title: '<div style="padding:5px;"> 태안군 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.74591186 , 126.3018915 )
+},
+
+{
+	title: '<div style="padding:5px;"> 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 34.96091348 , 127.4897497 )
+},
+
+{
+	title: '<div style="padding:5px;"> 정선군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.38230943 , 128.673439 )
+},
+
+{
+	title: '<div style="padding:5px;"> 동두천시 교통약자(특별교통수단) 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.9008389589 , 127.0704968445 )
+},
+
+{
+	title: '<div style="padding:5px;"> 충청북도지체장애인협회증평군지회</div>',
+	lating: new kakao.maps.LatLng( 36.78404788 , 127.5848022 )
+},
+
+{
+	title: '<div style="padding:5px;"> 서산시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.77801054 , 126.4554934 )
+},
+
+{
+	title: '<div style="padding:5px;"> 홍성군 특별교통수단 및 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.59770889 , 126.6558164 )
+},
+
+{
+	title: '<div style="padding:5px;"> 단양군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.9874170531 , 128.3650489202 )
+},
+
+{
+	title: '<div style="padding:5px;"> 단양군장애인생활이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.98530043 , 128.3686533 )
+},
+
+{
+	title: '<div style="padding:5px;"> 단양군장애인단체연합회</div>',
+	lating: new kakao.maps.LatLng( 36.98530043 , 128.3686533 )
+},
+
+{
+	title: '<div style="padding:5px;"> 사단법인한국시각장애인연합회영월지회</div>',
+	lating: new kakao.maps.LatLng( 37.185347 , 128.467917 )
+},
+
+{
+	title: '<div style="padding:5px;"> 대광택시㈜</div>',
+	lating: new kakao.maps.LatLng( 35.47395045 , 128.7540292 )
+},
+
+{
+	title: '<div style="padding:5px;"> 서천군 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.07484589 , 126.6914382 )
+},
+
+{
+	title: '<div style="padding:5px;"> 천안시 교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.809959 , 127.155963 )
+},
+
+{
+	title: '<div style="padding:5px;"> 괴산군 교통약자 이동지원센터(장애인협회)</div>',
+	lating: new kakao.maps.LatLng( 36.80617067 , 127.7915432 )
+},
+
+{
+	title: '<div style="padding:5px;"> 괴산군 교통약자 이동지원센터(모범운전자회)</div>',
+	lating: new kakao.maps.LatLng( 36.80574942 , 127.8005846 )
+},
+
+{
+	title: '<div style="padding:5px;"> 김해교통약자콜택시</div>',
+	lating: new kakao.maps.LatLng( 35.22752268 , 128.900987 )
+},
+
+{
+	title: '<div style="padding:5px;"> 포항시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 36.008952 , 129.363876 )
+},
+
+{
+	title: '<div style="padding:5px;"> 전라남도지체장애인협회 보성군지회</div>',
+	lating: new kakao.maps.LatLng( 34.77417491 , 127.0865911 )
+},
+
+{
+	title: '<div style="padding:5px;"> 홍천군교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.69233941 , 127.8920355 )
+},
+
+{
+	title: '<div style="padding:5px;"> 과천시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.4281927195 , 126.9891524184 )
+},
+
+{
+	title: '<div style="padding:5px;"> 군포시 교통약자 이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.34847646 , 126.9503025 )
+},
+
+{
+	title: '<div style="padding:5px;"> 장애인콜택시</div>',
+	lating: new kakao.maps.LatLng( 35.93733144 , 127.1620975 )
+},
+
+{
+	title: '<div style="padding:5px;"> 양구군 장애인생활이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 38.1087485207 , 127.9864048749 )
+},
+
+{
+	title: '<div style="padding:5px;"> 강릉시교통약자이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.76923243 , 128.9298548 )
+},
+
+{
+	title: '<div style="padding:5px;"> 강원도 교통약자 광역이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.8800729197 , 127.7279078203 )
+},
+
+{
+	title: '<div style="padding:5px;"> 강원도교통약자광역이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.88007265 , 127.7279085 )
+},
+
+{
+	title: '<div style="padding:5px;"> 봄내콜이동지원센터</div>',
+	lating: new kakao.maps.LatLng( 37.914628 , 127.748277 )
+}
+];
+
+
+// 마커가 표시될 위치입니다 
+for (var i=0; i<positions.length;i++){
+	var markerPosition  = positions[i].lating
+
+	// 마커를 생성합니다
+	var marker = new kakao.maps.Marker({
+		position: markerPosition
+	});
+	marker.setMap(map);
+
+
+	// 마커에 표시할 인포윈도우를 생성합니다 
+	var infowindow = new kakao.maps.InfoWindow({
+    content: positions[i].title // 인포윈도우에 표시할 내용
+    });
+
+    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+	}
+
+	// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+	function makeOverListener(map, marker, infowindow) {
+    	return function() {
+        	infowindow.open(map, marker);
+    	};
+	}
+
+// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+	function makeOutListener(infowindow) {
+		return function() {
+			infowindow.close();
+		};
+
+// 마커에 클릭이벤트를 등록합니다
+	kakao.maps.event.addListener(marker, 'click', function() {
+	map.setCenter(Positions[i].LatLng);
+});
+
+}
+
+
+</script>
+</body>
+</html>
